@@ -1,0 +1,206 @@
+/* ── Search criteria grid ───────────────────────────────── */
+.search-criteria-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  background-color: var(--bg-primary);
+  padding: 1.25rem;
+  border-radius: var(--radius);
+  border: 1px solid #f1f5f9;
+}
+
+.search-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 0.5rem;
+}
+
+.search-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.search-btn {
+  padding: 0.625rem 1.75rem;
+}
+
+.search-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.search-error {
+  color: var(--error);
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* ── Result count badge ─────────────────────────────────── */
+.result-count {
+  margin-left: auto;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background-color: var(--primary);
+  color: white;
+  padding: 0.2rem 0.65rem;
+  border-radius: 9999px;
+}
+
+/* ── Result section ─────────────────────────────────────── */
+.result-section {
+  min-height: 350px;
+}
+
+.result-body {
+  margin-top: 1.5rem;
+}
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  background-color: white;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  animation: fadeIn 0.4s ease-out;
+}
+
+/* ── Result table ───────────────────────────────────────── */
+.result-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  min-width: 800px;
+}
+
+.result-table thead {
+  background-color: var(--bg-primary);
+  border-bottom: 2px solid var(--border-color);
+}
+
+.result-table th {
+  padding: 1rem;
+  font-weight: 600;
+  color: #475569;
+  font-size: 0.875rem;
+}
+
+.sortable-th {
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.sortable-th:hover {
+  background-color: #eef2f7;
+  color: var(--primary);
+}
+
+.sort-icon {
+  margin-left: 0.3rem;
+  font-size: 0.75rem;
+}
+
+.sort-icon--idle {
+  color: #cbd5e1;
+}
+
+.sort-icon--active {
+  color: var(--primary);
+}
+
+.result-table tbody tr {
+  border-bottom: 1px solid #f1f5f9;
+  transition: background-color 0.2s;
+}
+
+.result-table td {
+  padding: 1rem;
+  color: var(--text-muted);
+}
+
+.result-table td.col-id {
+  color: var(--text-main);
+  font-weight: 500;
+}
+
+.result-table td.col-name {
+  color: var(--text-main);
+}
+
+.result-table td.col-amount {
+  color: var(--text-main);
+  font-weight: 600;
+}
+
+.result-table td.col-date {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+/* ── Status badge ───────────────────────────────────────── */
+.status-badge {
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  background-color: #f1f5f9;
+  color: #475569;
+}
+
+.status-badge--approved {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.status-badge--pending {
+  background-color: #fef08a;
+  color: #854d0e;
+}
+
+.status-badge--review {
+  background-color: #dbeafe;
+  color: #1d4ed8;
+}
+
+.status-badge--rejected {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+/* ── Empty state ────────────────────────────────────────── */
+.empty-state {
+  width: 100%;
+  padding: 4rem 2rem;
+  text-align: center;
+  background-color: var(--bg-primary);
+  border: 2px dashed #cbd5e1;
+  border-radius: var(--radius);
+  color: var(--text-muted);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.empty-state-icon {
+  font-size: 3rem;
+  opacity: 0.5;
+}
+
+.empty-state-title {
+  color: #334155;
+  margin-bottom: 0.25rem;
+}
