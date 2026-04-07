@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-const API_BASE   = 'https://smartloan-api-ipn1.onrender.com';
-const API_KEY = 'smartloan-secret-key-2026';
-
 const LoanForm = () => {
   const initialState = {
     customerName: '',
@@ -25,6 +22,7 @@ const LoanForm = () => {
   };
 
   const [formData, setFormData] = useState(initialState);
+
   const [refData, setRefData] = useState({
     maritalStatuses: [],
     positions: [],
@@ -33,21 +31,67 @@ const LoanForm = () => {
     terms: [],
     homeOwnerships: []
   });
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`${API_BASE}/api/reflist`, {
-      headers: { 'x-api-key': API_KEY }
+    // 1. Fetch Marital Status directly from External API
+    fetch('https://smartloan-api-ipn1.onrender.com/api/reflist?type=maritalStatus', {
+      headers: {
+        'x-api-key': 'smartloan-secret-key-2026',
+        'ngrok-skip-browser-warning': '69420'
+      }
     })
       .then(res => res.json())
-      .then(data => {
-        if (data.success && data.data) setRefData(data.data);
-        setLoading(false);
+      .then(result => {
+        if (result.success && result.data) {
+          setRefData(prev => ({ ...prev, maritalStatuses: result.data }));
+        }
       })
-      .catch(err => {
-        console.error('Error fetching reference data:', err);
-        setLoading(false);
-      });
+      .catch(err => console.error('Error fetching Marital Status directly:', err));
+
+    // 2. Fetch Position directly
+    fetch('https://smartloan-api-ipn1.onrender.com/api/reflist?type=position', {
+      headers: { 'x-api-key': 'smartloan-secret-key-2026', 'ngrok-skip-browser-warning': '69420' }
+    })
+      .then(res => res.json())
+      .then(result => { if (result.success && result.data) setRefData(prev => ({ ...prev, positions: result.data })); })
+      .catch(err => console.error('Error fetching Position directly:', err));
+
+    // 3. Fetch Debt Type directly
+    fetch('https://smartloan-api-ipn1.onrender.com/api/reflist?type=debtType', {
+      headers: { 'x-api-key': 'smartloan-secret-key-2026', 'ngrok-skip-browser-warning': '69420' }
+    })
+      .then(res => res.json())
+      .then(result => { if (result.success && result.data) setRefData(prev => ({ ...prev, debtTypes: result.data })); })
+      .catch(err => console.error('Error fetching Debt Type directly:', err));
+
+    // 4. Fetch Purpose directly
+    fetch('https://smartloan-api-ipn1.onrender.com/api/reflist?type=purpose', {
+      headers: { 'x-api-key': 'smartloan-secret-key-2026', 'ngrok-skip-browser-warning': '69420' }
+    })
+      .then(res => res.json())
+      .then(result => { if (result.success && result.data) setRefData(prev => ({ ...prev, purposes: result.data })); })
+      .catch(err => console.error('Error fetching Purpose directly:', err));
+
+    // 5. Fetch Term directly
+    fetch('https://smartloan-api-ipn1.onrender.com/api/reflist?type=term', {
+      headers: { 'x-api-key': 'smartloan-secret-key-2026', 'ngrok-skip-browser-warning': '69420' }
+    })
+      .then(res => res.json())
+      .then(result => { if (result.success && result.data) setRefData(prev => ({ ...prev, terms: result.data })); })
+      .catch(err => console.error('Error fetching Term directly:', err));
+
+    // 6. Fetch Home Ownership directly
+    fetch('https://smartloan-api-ipn1.onrender.com/api/reflist?type=homeOwnership', {
+      headers: { 'x-api-key': 'smartloan-secret-key-2026', 'ngrok-skip-browser-warning': '69420' }
+    })
+      .then(res => res.json())
+      .then(result => { 
+        if (result.success && result.data) setRefData(prev => ({ ...prev, homeOwnerships: result.data })); 
+        setLoading(false); 
+      })
+      .catch(err => { console.error('Error fetching Home Ownership directly:', err); setLoading(false); });
   }, []);
 
   const formatNationalId = (val) => {
@@ -63,7 +107,10 @@ const LoanForm = () => {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    if (type === 'checkbox') {
+    if (type === 'select-multiple') {
+      const values = Array.from(e.target.selectedOptions, option => parseInt(option.value));
+      setFormData(prev => ({ ...prev, [name]: values }));
+    } else if (type === 'checkbox') {
       const debtId = parseInt(value);
       setFormData(prev => ({
         ...prev,
@@ -87,62 +134,65 @@ const LoanForm = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (window.confirm('Are you sure you want to save this application?')) {
-      const payload = {
-        customerName:     formData.customerName,
-        nationalId:       formData.nationalId.replace(/-/g, ''),
-        dob:              formData.dob,
-        address:          formData.address,
-        phoneNumber:      formData.phoneNumber,
-        email:            formData.email,
-        maritalStatusId:  parseInt(formData.maritalStatusId),
-        companyName:      formData.companyName || undefined,
-        positionId:       formData.positionId ? parseInt(formData.positionId) : undefined,
-        employmentPeriod: formData.employmentPeriod || undefined,
-        annualIncome:     formData.annualIncome ? parseFloat(formData.annualIncome) : undefined,
-        officeNumber:     formData.officeNumber || undefined,
-        loanAmount:       parseFloat(formData.loanAmount),
-        purposeId:        parseInt(formData.purposeId),
-        termId:           parseInt(formData.termId),
-        homeOwnershipId:  parseInt(formData.homeOwnershipId),
-        debtTypeIds:      formData.debts,
+      console.log('Step 1: UI submitting application directly to External API...');
+      
+      // Clean and typecast data properly for the external API
+      const cleanedData = {
+        ...formData,
+        nationalId: formData.nationalId.replace(/-/g, ''),
+        maritalStatusId: formData.maritalStatusId ? parseInt(formData.maritalStatusId, 10) : undefined,
+        positionId: formData.positionId ? parseInt(formData.positionId, 10) : undefined,
+        annualIncome: formData.annualIncome ? parseFloat(formData.annualIncome) : undefined,
+        loanAmount: formData.loanAmount ? parseFloat(formData.loanAmount) : undefined,
+        purposeId: formData.purposeId ? parseInt(formData.purposeId, 10) : undefined,
+        termId: formData.termId ? parseInt(formData.termId, 10) : undefined,
+        homeOwnershipId: formData.homeOwnershipId ? parseInt(formData.homeOwnershipId, 10) : undefined,
+        debts: Array.isArray(formData.debts) ? formData.debts.map(d => parseInt(d, 10)) : []
       };
-      fetch(`${API_BASE}/api/loan/apply`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-api-key': API_KEY },
-        body: JSON.stringify(payload)
-      })
-        .then(res => res.json())
-        .then(data => {
-          if (data.success) {
-            alert('Application submitted successfully!');
-            setFormData(initialState);
-          } else {
-            alert('Error: ' + (data.message || 'Submission failed'));
-          }
-        })
-        .catch(err => alert('Error submitting application'));
+
+      try {
+        const response = await fetch('https://smartloan-api-ipn1.onrender.com/api/loan/apply', {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'x-api-key': 'smartloan-secret-key-2026',
+            'ngrok-skip-browser-warning': '69420'
+          },
+          body: JSON.stringify(cleanedData)
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'Failed to submit application to Render API');
+        }
+
+        const data = await response.json();
+        alert('Application submitted successfully! ID: ' + (data.data?.id || ''));
+        setFormData(initialState); // Clear form after success
+      } catch (err) {
+        console.error('Error submitting application:', err);
+        alert('Error submitting application: ' + err.message);
+      }
     }
   };
 
   if (loading) return <div>Loading...</div>;
 
   return (
-    <div className="card card--animated">
-      <div className="card-top-bar" />
+    <div className="card" style={{ animation: 'fadeIn 0.4s ease-out', position: 'relative', overflow: 'hidden' }}>
+      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '4px', background: 'linear-gradient(90deg, var(--primary) 0%, #60a5fa 100%)' }}></div>
       <h2 className="section-title">Loan Application Form (แบบฟอร์มการสมัครสินเชื่อ)</h2>
 
       <form onSubmit={handleSubmit}>
-
         {/* Personal Information */}
         <section className="form-section">
-          <h3 className="section-header">
-            <span className="section-header-icon">👤</span>
-            Personal Information (ข้อมูลส่วนบุคคล)
+          <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#1e293b', borderBottom: '1px solid #e2e8f0', paddingBottom: '0.75rem' }}>
+            <span style={{ fontSize: '1.25rem' }}>👤</span> Personal Information (ข้อมูลส่วนบุคคล)
           </h3>
-          <div className="form-grid form-grid--panel">
+          <div className="form-grid" style={{ backgroundColor: '#f8fafc', padding: '1.5rem', borderRadius: '8px', border: '1px solid #f1f5f9' }}>
             <div className="form-group">
               <label className="required">Customer Name (ชื่อ-นามสกุล)</label>
               <input type="text" name="customerName" value={formData.customerName} onChange={handleChange} required placeholder="Full Name" />
@@ -155,7 +205,7 @@ const LoanForm = () => {
               <label className="required">Date of Birth (วันเดือนปีเกิด)</label>
               <input type="date" name="dob" value={formData.dob} onChange={handleChange} required />
             </div>
-            <div className="form-group col-full">
+            <div className="form-group" style={{ gridColumn: '1 / -1' }}>
               <label>Address (ที่อยู่)</label>
               <textarea name="address" value={formData.address} onChange={handleChange} rows="3" placeholder="Full Address"></textarea>
             </div>
@@ -181,11 +231,10 @@ const LoanForm = () => {
 
         {/* Employment & Income */}
         <section className="form-section">
-          <h3 className="section-header">
-            <span className="section-header-icon">💼</span>
-            Employment &amp; Income (ข้อมูลอาชีพและรายได้)
+          <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#1e293b', borderBottom: '1px solid #e2e8f0', paddingBottom: '0.75rem' }}>
+            <span style={{ fontSize: '1.25rem' }}>💼</span> Employment & Income (ข้อมูลอาชีพและรายได้)
           </h3>
-          <div className="form-grid form-grid--panel">
+          <div className="form-grid" style={{ backgroundColor: '#f8fafc', padding: '1.5rem', borderRadius: '8px', border: '1px solid #f1f5f9' }}>
             <div className="form-group">
               <label>Company Name (ชื่อบริษัท)</label>
               <input type="text" name="companyName" value={formData.companyName} onChange={handleChange} placeholder="Company Name Co., Ltd." />
@@ -205,9 +254,9 @@ const LoanForm = () => {
             </div>
             <div className="form-group">
               <label>Annual Income (รายได้ต่อปี)</label>
-              <div className="input-currency-wrapper">
-                <span className="currency-symbol">฿</span>
-                <input type="number" name="annualIncome" value={formData.annualIncome} onChange={handleChange} step="0.01" max="999999999.99" className="input-with-currency" placeholder="0.00" />
+              <div style={{ position: 'relative' }}>
+                <span style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }}>฿</span>
+                <input type="number" name="annualIncome" value={formData.annualIncome} onChange={handleChange} step="0.01" max="999999999.99" style={{ paddingLeft: '2rem', width: '100%' }} placeholder="0.00" />
               </div>
             </div>
             <div className="form-group">
@@ -219,32 +268,39 @@ const LoanForm = () => {
 
         {/* Loan Details */}
         <section className="form-section">
-          <h3 className="section-header">
-            <span className="section-header-icon">💰</span>
-            Loan Details (รายละเอียดสินเชื่อที่ต้องการ)
+          <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#1e293b', borderBottom: '1px solid #e2e8f0', paddingBottom: '0.75rem' }}>
+            <span style={{ fontSize: '1.25rem' }}>💰</span> Loan Details (รายละเอียดสินเชื่อที่ต้องการ)
           </h3>
-          <div className="form-grid form-grid--panel">
-            <div className="form-group col-full">
+          <div className="form-grid" style={{ backgroundColor: '#f8fafc', padding: '1.5rem', borderRadius: '8px', border: '1px solid #f1f5f9' }}>
+            <div className="form-group" style={{ gridColumn: '1 / -1' }}>
               <label>Existing Debt Burdens (ภาระหนี้สินที่มีอยู่)</label>
-              <div className="listbox-container">
+              <select 
+                multiple 
+                name="debts" 
+                value={formData.debts} 
+                onChange={handleChange}
+                style={{ 
+                  width: '100%', 
+                  padding: '0.75rem', 
+                  border: '1px solid #cbd5e1', 
+                  borderRadius: '6px', 
+                  height: '140px',
+                  backgroundColor: 'white'
+                }}
+              >
                 {refData.debtTypes.map(debt => (
-                  <label key={debt.id} className="listbox-item">
-                    <input
-                      type="checkbox"
-                      value={debt.id}
-                      checked={formData.debts.includes(debt.id)}
-                      onChange={handleChange}
-                    />
-                    <span>{debt.nameEn} ({debt.nameTh})</span>
-                  </label>
+                  <option key={debt.id} value={debt.id} style={{ padding: '0.35rem 0.5rem', marginBottom: '4px' }}>
+                    {debt.nameEn} ({debt.nameTh})
+                  </option>
                 ))}
-              </div>
+              </select>
+              <small style={{display: 'block', color:'#64748b', marginTop: '0.25rem', fontSize:'0.75rem'}}>* Hold Ctrl (Windows) or Cmd (Mac) to select multiple options</small>
             </div>
             <div className="form-group">
               <label className="required">Loan Amount (วงเงินที่ขอกู้)</label>
-              <div className="input-currency-wrapper">
-                <span className="currency-symbol">฿</span>
-                <input type="number" name="loanAmount" value={formData.loanAmount} onChange={handleChange} required step="0.01" max="999999999.99" className="input-with-currency input-loan-amount" placeholder="0.00" />
+              <div style={{ position: 'relative' }}>
+                <span style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }}>฿</span>
+                <input type="number" name="loanAmount" value={formData.loanAmount} onChange={handleChange} required step="0.01" max="999999999.99" style={{ paddingLeft: '2rem', width: '100%', borderColor: '#3b82f6' }} placeholder="0.00" />
               </div>
             </div>
             <div className="form-group">
@@ -277,21 +333,20 @@ const LoanForm = () => {
           </div>
         </section>
 
-        <div className="form-footer">
+        <div className="form-footer" style={{ marginTop: '2rem', paddingTop: '1.5rem', borderTop: '2px solid #e2e8f0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div className="footer-info">
             <div className="footer-info-item">Last Updated By: Administrator</div>
             <div className="footer-info-item">Date: {new Date().toLocaleString('sv-SE', { timeZone: 'Asia/Bangkok' })}</div>
           </div>
           <div className="footer-actions">
-            <button type="button" className="btn btn-cancel btn--flex" onClick={handleClear}>
+            <button type="button" className="btn btn-cancel" onClick={handleClear} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
               <span>↺</span> Clear
             </button>
-            <button type="submit" className="btn btn-update btn--flex">
+            <button type="submit" className="btn btn-update" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
               <span>✓</span> Save
             </button>
           </div>
         </div>
-
       </form>
     </div>
   );
