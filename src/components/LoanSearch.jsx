@@ -53,6 +53,15 @@ const LoanSearch = () => {
     }
   };
 
+  const formatNationalId = (id) => {
+    if (!id) return '-';
+    const cleanId = id.toString().replace(/\D/g, '');
+    if (cleanId.length === 13) {
+      return `${cleanId.slice(0, 1)}-${cleanId.slice(1, 5)}-${cleanId.slice(5, 10)}-${cleanId.slice(10, 12)}-${cleanId.slice(12, 13)}`;
+    }
+    return id;
+  };
+
   return (
     <div className="card" style={{ animation: 'fadeIn 0.4s ease-out', position: 'relative', overflow: 'hidden' }}>
       <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '4px', background: 'linear-gradient(90deg, var(--primary) 0%, #60a5fa 100%)' }}></div>
@@ -234,7 +243,7 @@ const LoanSearch = () => {
                     <tr key={loan.id || index} style={{ animationDelay: `${index * 0.05}s` }}>
                       <td style={{ color: '#0f172a', fontWeight: '600' }}>#{loan.id}</td>
                       <td style={{ color: '#334155', fontWeight: '500' }}>{loan.customerName || '-'}</td>
-                      <td style={{ color: '#64748b', fontFamily: 'monospace', fontSize: '0.9rem' }}>{loan.nationalId || '-'}</td>
+                      <td style={{ color: '#64748b', fontFamily: 'monospace', fontSize: '0.9rem' }}>{formatNationalId(loan.nationalId)}</td>
                       <td style={{ color: '#64748b' }}>{loan.phoneNumber || '-'}</td>
                       <td style={{ color: '#0f172a', fontWeight: '700' }}>
                         {loan.loanAmount 
