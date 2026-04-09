@@ -230,10 +230,10 @@ const NewLoanForm = () => {
         {/* CUSTOMER INFORMATION */}
         <section className="form-section">
           <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#1e293b', borderBottom: '1px solid #e2e8f0', paddingBottom: '0.75rem' }}>
-            <span style={{ fontSize: '1.25rem' }}>👤</span> 1. Customer Information (ข้อมูลลูกค้า)
+            <span style={{ fontSize: '1.25rem' }}>👤</span> Customer Information (ข้อมูลลูกค้า)
           </h3>
           <div className="form-grid" style={{ backgroundColor: '#f8fafc', padding: '1.5rem', borderRadius: '8px', border: '1px solid #f1f5f9' }}>
-            {renderInput('customerName', 'Customer Name (ชื่อ-นามสกุล)', 'text', true)}
+            {renderInput('customerName', 'Customer Name (ชื่อ-นามสกุล)', 'text', true, 'Full Name')}
             
             <div className="form-group">
               <label className="required">National ID (บัตรประชาชน)</label>
@@ -255,10 +255,10 @@ const NewLoanForm = () => {
               {errors.dob && <div style={{color: '#ef4444', fontSize: '0.8rem', marginTop: '0.4rem'}}>{errors.dob}</div>}
             </div>
 
-            {renderInput('phoneNumber', 'Phone Number (เบอร์โทรศัพท์)', 'tel')}
+            {renderInput('phoneNumber', 'Phone Number (เบอร์โทรศัพท์)', 'tel', false, '08xxxxxxxx')}
             {renderInput('email', 'Email (อีเมล)', 'email', false, 'username@domain.com')}
             {renderDropdown('maritalStatus', 'Marital Status (สถานภาพการสมรส)')}
-            {renderInput('companyName', 'Company Name (ชื่อบริษัท)')}
+            {renderInput('companyName', 'Company Name (ชื่อบริษัท)', 'text', false, 'Company Name Co., Ltd.')}
             {renderDropdown('position', 'Position (ตำแหน่งงาน)')}
             {renderInput('officeNumber', 'Office Number (เบอร์โทรศัพท์ที่ทำงาน)')}
             
@@ -272,7 +272,7 @@ const NewLoanForm = () => {
         {/* LOAN DETAILS */}
         <section className="form-section">
           <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#1e293b', borderBottom: '1px solid #e2e8f0', paddingBottom: '0.75rem' }}>
-            <span style={{ fontSize: '1.25rem' }}>💰</span> 2. Loan Details (รายละเอียดสินเชื่อ)
+            <span style={{ fontSize: '1.25rem' }}>💰</span> Loan Details (รายละเอียดสินเชื่อ)
           </h3>
           <div className="form-grid" style={{ backgroundColor: '#f8fafc', padding: '1.5rem', borderRadius: '8px', border: '1px solid #f1f5f9' }}>
             <div className="form-group">
@@ -291,10 +291,10 @@ const NewLoanForm = () => {
         {/* APPLICANT FINANCIAL & EMPLOYMENT */}
         <section className="form-section">
           <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#1e293b', borderBottom: '1px solid #e2e8f0', paddingBottom: '0.75rem' }}>
-            <span style={{ fontSize: '1.25rem' }}>💼</span> 3. Applicant Financial & Employment (การเงินและการทำงาน)
+            <span style={{ fontSize: '1.25rem' }}>💼</span> Applicant Financial & Employment (การเงินและการทำงาน)
           </h3>
           <div className="form-grid" style={{ backgroundColor: '#f8fafc', padding: '1.5rem', borderRadius: '8px', border: '1px solid #f1f5f9' }}>
-            {renderInput('employmentPeriod', 'Employment Period (ระยะเวลาการทำงาน - ปี)', 'number')}
+            {renderInput('employmentPeriod', 'Employment Period (ระยะเวลาการทำงาน - ปี)', 'number', false, 'e.g. 2')}
             {renderDropdown('homeOwnership', 'Home Ownership (สถานะครอบครองที่อยู่อาศัย)')}
             {renderDropdown('incomeCategory', 'Income Category (ระดับรายได้)')}
             <div className="form-group">
@@ -311,7 +311,7 @@ const NewLoanForm = () => {
         {/* LOAN TERMS & FINALIZATION */}
         <section className="form-section">
           <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#1e293b', borderBottom: '1px solid #e2e8f0', paddingBottom: '0.75rem' }}>
-            <span style={{ fontSize: '1.25rem' }}>📋</span> 4. Loan Terms & Finalization (เงื่อนไขและการสรุป)
+            <span style={{ fontSize: '1.25rem' }}>📋</span> Loan Terms & Finalization (เงื่อนไขและการสรุป)
           </h3>
           <div className="form-grid" style={{ backgroundColor: '#f8fafc', padding: '1.5rem', borderRadius: '8px', border: '1px solid #f1f5f9' }}>
             {renderInput('interestRate', 'Interest Rate (%)', 'number')}
