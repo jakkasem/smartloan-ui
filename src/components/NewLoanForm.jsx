@@ -260,7 +260,7 @@ const NewLoanForm = () => {
             {renderDropdown('maritalStatus', 'Marital Status (สถานภาพการสมรส)')}
             {renderInput('companyName', 'Company Name (ชื่อบริษัท)', 'text', false, 'Company Name Co., Ltd.')}
             {renderDropdown('position', 'Position (ตำแหน่งงาน)')}
-            {renderInput('officeNumber', 'Office Number (เบอร์โทรศัพท์ที่ทำงาน)')}
+            {renderInput('officeNumber', 'Office Number (เบอร์โทรศัพท์ที่ทำงาน)', 'tel', false, 'e.g. 021234567 ext 123')}
             
             <div className="form-group" style={{ gridColumn: '1 / -1' }}>
               <label>Address (ที่อยู่)</label>
@@ -304,7 +304,7 @@ const NewLoanForm = () => {
                 <input type="number" name="annualIncome" value={formData.annualIncome} onChange={handleChange} step="0.01" style={{ paddingLeft: '2rem', width: '100%' }} placeholder="0.00" />
               </div>
             </div>
-            {renderInput('debtToIncomeRatio', 'Debt-to-Income Ratio (%)', 'number')}
+            {renderInput('debtToIncomeRatio', 'Debt-to-Income Ratio (อัตราส่วนหนี้สินต่อรายได้)', 'number')}
           </div>
         </section>
 
@@ -314,7 +314,7 @@ const NewLoanForm = () => {
             <span style={{ fontSize: '1.25rem' }}>📋</span> Loan Terms & Finalization (เงื่อนไขและการสรุป)
           </h3>
           <div className="form-grid" style={{ backgroundColor: '#f8fafc', padding: '1.5rem', borderRadius: '8px', border: '1px solid #f1f5f9' }}>
-            {renderInput('interestRate', 'Interest Rate (%)', 'number')}
+            {renderInput('interestRate', 'Interest Rate (อัตราดอกเบี้ย %)', 'number')}
             {renderDropdown('grade', 'Grade (ระดับความน่าเชื่อถือ)')}
             {renderDropdown('loanCondition', 'Loan Condition (สถานะของสัญญา)')}
             <div className="form-group">
@@ -324,10 +324,28 @@ const NewLoanForm = () => {
                 <input type="number" name="installment" value={formData.installment} onChange={handleChange} step="0.01" style={{ paddingLeft: '2rem', width: '100%' }} placeholder="0.00" />
               </div>
             </div>
-            {renderDropdown('interestPaymentType', 'Interest Payment Type')}
-            {renderInput('totalPayment', 'Total Payment (ยอดชำระรวมสะสม)', 'number')}
-            {renderInput('totalReceivedPrincipal', 'Total Received Principal', 'number')}
-            {renderInput('recoveries', 'Recoveries (เงินคืนจากการตัดหนี้สูญ)', 'number')}
+            {renderDropdown('interestPaymentType', 'Interest Payment Type (ระบุรูปแบบการจ่ายดอกเบี้ย)')}
+            <div className="form-group">
+              <label>Total Payment (ยอดชำระรวมสะสม)</label>
+              <div style={{ position: 'relative' }}>
+                <span style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }}>฿</span>
+                <input type="number" name="totalPayment" value={formData.totalPayment} onChange={handleChange} step="0.01" style={{ paddingLeft: '2rem', width: '100%' }} placeholder="0.00" />
+              </div>
+            </div>
+            <div className="form-group">
+              <label>Total Received Principal (ยอดเงินต้นที่ชำระคืนแล้ว)</label>
+              <div style={{ position: 'relative' }}>
+                <span style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }}>฿</span>
+                <input type="number" name="totalReceivedPrincipal" value={formData.totalReceivedPrincipal} onChange={handleChange} step="0.01" style={{ paddingLeft: '2rem', width: '100%' }} placeholder="0.00" />
+              </div>
+            </div>
+            <div className="form-group">
+              <label>Recoveries (เงินคืนจากการตัดหนี้สูญ)</label>
+              <div style={{ position: 'relative' }}>
+                <span style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }}>฿</span>
+                <input type="number" name="recoveries" value={formData.recoveries} onChange={handleChange} step="0.01" style={{ paddingLeft: '2rem', width: '100%' }} placeholder="0.00" />
+              </div>
+            </div>
             
             <div className="form-group">
               <label>Final Date (วันที่ชำระเงินงวดล่าสุด)</label>
