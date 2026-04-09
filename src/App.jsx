@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import LoanForm from './components/LoanForm';
 import LoanSearch from './components/LoanSearch';
+import NewLoanForm from './components/NewLoanForm';
 
 function App() {
   const [activeView, setActiveView] = useState('application');
@@ -46,6 +47,22 @@ function App() {
             {activeView === 'application' && <span style={{ marginLeft: 'auto', width: '6px', height: '6px', background: '#2563eb', borderRadius: '50%' }}></span>}
           </button>
           <button 
+            className={`sidebar-item ${activeView === 'newApplication' ? 'active' : ''}`}
+            onClick={() => setActiveView('newApplication')}
+            style={{ 
+              display: 'flex', alignItems: 'center', gap: '0.75rem',
+              textAlign: 'left', border: 'none', background: activeView === 'newApplication' ? '#eff6ff' : 'transparent', 
+              width: '100%', cursor: 'pointer', borderRadius: '8px', padding: '0.85rem 1rem',
+              fontWeight: activeView === 'newApplication' ? '600' : '500',
+              color: activeView === 'newApplication' ? '#2563eb' : '#475569',
+              transition: 'all 0.2s ease'
+            }}
+          >
+            <span style={{ fontSize: '1.1rem', opacity: activeView === 'newApplication' ? 1 : 0.6 }}>✨</span> 
+            New Loan Form
+            {activeView === 'newApplication' && <span style={{ marginLeft: 'auto', width: '6px', height: '6px', background: '#2563eb', borderRadius: '50%' }}></span>}
+          </button>
+          <button 
             className={`sidebar-item ${activeView === 'search' ? 'active' : ''}`}
             onClick={() => setActiveView('search')}
             style={{ 
@@ -67,7 +84,7 @@ function App() {
       <main className="main-content">
         <header>
           <div style={{ fontSize: '0.875rem', fontWeight: '500', color: 'var(--text-muted)' }}>
-            Home / {activeView === 'application' ? 'Loan Application' : 'Loan Search'}
+            Home / {activeView === 'application' ? 'Loan Application' : activeView === 'newApplication' ? 'New Loan Application' : 'Loan Search'}
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
             <span style={{ fontSize: '0.875rem' }}>ยินดีต้อนรับ, Admin</span>
@@ -78,7 +95,9 @@ function App() {
         </header>
 
         <div className="content-body">
-          {activeView === 'application' ? <LoanForm /> : <LoanSearch />}
+          {activeView === 'application' && <LoanForm />}
+          {activeView === 'newApplication' && <NewLoanForm />}
+          {activeView === 'search' && <LoanSearch />}
         </div>
       </main>
     </div>
