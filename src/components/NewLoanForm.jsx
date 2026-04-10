@@ -63,8 +63,8 @@ const NewLoanForm = () => {
       { code: 'PROMO', value: 'Promotional' }
     ],
     interestPaymentType: [
-      { code: 'FIXED', value: 'Fixed Rate' },
-      { code: 'FLOATING', value: 'Floating Rate' }
+      { id: 1, nameTh: 'ต่ำ', nameEn: 'Low', isActive: true },
+      { id: 2, nameTh: 'สูง', nameEn: 'High', isActive: true }
     ]
   });
 
