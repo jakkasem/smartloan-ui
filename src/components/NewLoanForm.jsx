@@ -59,8 +59,8 @@ const NewLoanForm = () => {
       { code: 'D', value: 'D' }, { code: 'E', value: 'E' }, { code: 'F', value: 'F' }, { code: 'G', value: 'G' }
     ],
     loanCondition: [
-      { code: 'STANDARD', value: 'Standard Term' },
-      { code: 'PROMO', value: 'Promotional' }
+      { id: 0, nameTh: 'สินเชื่อคุณภาพดี', nameEn: 'Good Loan', isActive: true },
+      { id: 1, nameTh: 'สินเชื่อคุณภาพไม่ดี', nameEn: 'Bad Loan', isActive: true }
     ],
     interestPaymentType: [
       { id: 1, nameTh: 'ต่ำ', nameEn: 'Low', isActive: true },
