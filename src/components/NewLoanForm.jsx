@@ -47,9 +47,7 @@ const NewLoanForm = () => {
     purpose: [],
     homeOwnership: [],
     applicationType: [
-      { code: 'NEW', value: 'New Application' },
-      { code: 'REFINANCE', value: 'Refinance' },
-      { code: 'TOPUP', value: 'Top Up' }
+      { id: 1, nameTh: 'กู้เดี่ยว', nameEn: 'Individual Loan', isActive: true }
     ],
     incomeCategory: [
       { code: 'LOW', value: 'Below 15,000 THB' },
@@ -182,7 +180,7 @@ const NewLoanForm = () => {
         <option value="">Select...</option>
         {options[name]?.map((opt, i) => {
           const val = opt.code || opt.id || opt.value || (typeof opt === 'string' ? opt : i);
-          const display = opt.nameTh ? `${opt.nameEn || opt.name || val} (${opt.nameTh})` : (opt.nameEn || opt.name || opt.value || (typeof opt === 'string' ? opt : 'Unknown'));
+          const display = opt.nameTh ? `${opt.nameTh} (${opt.nameEn || opt.name || val})` : (opt.nameEn || opt.name || opt.value || (typeof opt === 'string' ? opt : 'Unknown'));
           return (
             <option key={i} value={val}>{display}</option>
           );
