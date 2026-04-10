@@ -50,9 +50,9 @@ const NewLoanForm = () => {
       { id: 1, nameTh: 'กู้เดี่ยว', nameEn: 'Individual Loan', isActive: true }
     ],
     incomeCategory: [
-      { code: 'LOW', value: 'Below 15,000 THB' },
-      { code: 'MID', value: '15,000 - 50,000 THB' },
-      { code: 'HIGH', value: 'Above 50,000 THB' }
+      { id: 1, nameTh: 'รายได้ต่ำกว่า 15,000', nameEn: 'Low', isActive: true },
+      { id: 2, nameTh: 'รายได้ระหว่าง 15,000 - 50,000', nameEn: 'Medium', isActive: true },
+      { id: 3, nameTh: 'รายได้สูงกว่า 50,000', nameEn: 'High', isActive: true }
     ],
     grade: [
       { code: 'A', value: 'A' }, { code: 'B', value: 'B' }, { code: 'C', value: 'C' },
