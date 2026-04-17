@@ -46,9 +46,7 @@ const NewLoanForm = () => {
     term: [],
     purpose: [],
     homeOwnership: [],
-    applicationType: [
-      { id: 1, nameTh: 'กู้เดี่ยว', nameEn: 'Individual Loan', isActive: true }
-    ],
+    applicationType: [],
     incomeCategory: [
       { id: 1, nameTh: 'รายได้ต่ำกว่า 15,000', nameEn: 'Low', isActive: true },
       { id: 2, nameTh: 'รายได้ระหว่าง 15,000 - 50,000', nameEn: 'Medium', isActive: true },
@@ -90,6 +88,7 @@ const NewLoanForm = () => {
     fetchRefList('maritalStatus');
     fetchRefList('position');
     fetchRefList('term');
+    fetchRefList('applicationType');
     fetchRefList('purpose');
     fetchRefList('homeOwnership');
   }, []);
