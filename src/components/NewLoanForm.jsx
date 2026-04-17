@@ -21,7 +21,7 @@ const NewLoanForm = () => {
     
     employmentPeriod: '',
     homeOwnership: '',
-    incomeCategory: '',
+    incomeCate: '',
     annualIncome: '',
     debtToIncomeRatio: '',
     
@@ -29,7 +29,7 @@ const NewLoanForm = () => {
     grade: '',
     loanCondition: '',
     installment: '',
-    interestPaymentType: '',
+    paymentType: '',
     totalPayment: '',
     totalReceivedPrincipal: '',
     finalDate: '',
@@ -47,23 +47,13 @@ const NewLoanForm = () => {
     purpose: [],
     homeOwnership: [],
     applicationType: [],
-    incomeCategory: [
-      { id: 1, nameTh: 'รายได้ต่ำกว่า 15,000', nameEn: 'Low', isActive: true },
-      { id: 2, nameTh: 'รายได้ระหว่าง 15,000 - 50,000', nameEn: 'Medium', isActive: true },
-      { id: 3, nameTh: 'รายได้สูงกว่า 50,000', nameEn: 'High', isActive: true }
-    ],
+    incomeCate: [],
     grade: [
       { code: 'A', value: 'A' }, { code: 'B', value: 'B' }, { code: 'C', value: 'C' },
       { code: 'D', value: 'D' }, { code: 'E', value: 'E' }, { code: 'F', value: 'F' }, { code: 'G', value: 'G' }
     ],
-    loanCondition: [
-      { id: 0, nameTh: 'สินเชื่อคุณภาพดี', nameEn: 'Good Loan', isActive: true },
-      { id: 1, nameTh: 'สินเชื่อคุณภาพไม่ดี', nameEn: 'Bad Loan', isActive: true }
-    ],
-    interestPaymentType: [
-      { id: 1, nameTh: 'ต่ำ', nameEn: 'Low', isActive: true },
-      { id: 2, nameTh: 'สูง', nameEn: 'High', isActive: true }
-    ]
+    loanCondition: [],
+    paymentType: []
   });
 
   // --- Fetch APIs ---
@@ -91,6 +81,9 @@ const NewLoanForm = () => {
     fetchRefList('applicationType');
     fetchRefList('purpose');
     fetchRefList('homeOwnership');
+    fetchRefList('incomeCate');
+    fetchRefList('loanCondition');
+    fetchRefList('paymentType');
   }, []);
 
   // --- Handlers ---
@@ -135,9 +128,9 @@ const NewLoanForm = () => {
       customerName: '', nationalId: '', dob: '',
       address: '', phoneNumber: '', email: '', maritalStatus: '', companyName: '',
       position: '', officeNumber: '', loanAmount: '', term: '', applicationType: '',
-      purpose: '', employmentPeriod: '', homeOwnership: '', incomeCategory: '',
+      purpose: '', employmentPeriod: '', homeOwnership: '', incomeCate: '',
       annualIncome: '', debtToIncomeRatio: '', interestRate: '', grade: '',
-      loanCondition: '', installment: '', interestPaymentType: '', totalPayment: '',
+      loanCondition: '', installment: '', paymentType: '', totalPayment: '',
       totalReceivedPrincipal: '', finalDate: '',
       recoveries: ''
     });
@@ -293,7 +286,7 @@ const NewLoanForm = () => {
           <div className="form-grid" style={{ backgroundColor: '#f8fafc', padding: '1.5rem', borderRadius: '8px', border: '1px solid #f1f5f9' }}>
             {renderInput('employmentPeriod', 'Employment Period (ระยะเวลาการทำงาน - ปี)', 'number', false, 'e.g. 2')}
             {renderDropdown('homeOwnership', 'Home Ownership (สถานะครอบครองที่อยู่อาศัย)')}
-            {renderDropdown('incomeCategory', 'Income Category (ระดับรายได้)')}
+            {renderDropdown('incomeCate', 'Income Category (ระดับรายได้)')}
             <div className="form-group">
               <label>Annual Income (รายได้ต่อปี)</label>
               <div style={{ position: 'relative' }}>
@@ -321,7 +314,7 @@ const NewLoanForm = () => {
                 <input type="number" name="installment" value={formData.installment} onChange={handleChange} step="0.01" style={{ paddingLeft: '2rem', width: '100%' }} placeholder="0.00" />
               </div>
             </div>
-            {renderDropdown('interestPaymentType', 'Interest Payment Type (ระบุรูปแบบการจ่ายดอกเบี้ย)')}
+            {renderDropdown('paymentType', 'Interest Payment Type (ระบุรูปแบบการจ่ายดอกเบี้ย)')}
             <div className="form-group">
               <label>Total Payment (ยอดชำระรวมสะสม)</label>
               <div style={{ position: 'relative' }}>
