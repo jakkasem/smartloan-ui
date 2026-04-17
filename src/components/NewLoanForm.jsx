@@ -21,7 +21,7 @@ const NewLoanForm = () => {
     
     employmentPeriod: '',
     homeOwnership: '',
-    incomeCate: '',
+    incomeCategory: '',
     annualIncome: '',
     debtToIncomeRatio: '',
     
@@ -128,7 +128,7 @@ const NewLoanForm = () => {
       customerName: '', nationalId: '', dob: '',
       address: '', phoneNumber: '', email: '', maritalStatus: '', companyName: '',
       position: '', officeNumber: '', loanAmount: '', term: '', applicationType: '',
-      purpose: '', employmentPeriod: '', homeOwnership: '', incomeCate: '',
+      purpose: '', employmentPeriod: '', homeOwnership: '', incomeCategory: '',
       annualIncome: '', debtToIncomeRatio: '', interestRate: '', grade: '',
       loanCondition: '', installment: '', paymentType: '', totalPayment: '',
       totalReceivedPrincipal: '', finalDate: '',
@@ -165,22 +165,25 @@ const NewLoanForm = () => {
   const currentDate = new Date();
   const formattedDateStr = `${String(currentDate.getDate()).padStart(2, '0')}/${String(currentDate.getMonth() + 1).padStart(2, '0')}/${currentDate.getFullYear()} ${String(currentDate.getHours()).padStart(2, '0')}:${String(currentDate.getMinutes()).padStart(2, '0')}`;
 
-  const renderDropdown = (name, label, required=false) => (
-    <div className="form-group">
-      <label className={required ? 'required' : ''}>{label}</label>
-      <select name={name} value={formData[name]} onChange={handleChange} style={errors[name] ? {borderColor: '#ef4444'} : {}}>
-        <option value="">Select...</option>
-        {options[name]?.map((opt, i) => {
-          const val = opt.code || opt.id || opt.value || (typeof opt === 'string' ? opt : i);
-          const display = opt.nameTh ? `${opt.nameTh} (${opt.nameEn || opt.name || val})` : (opt.nameEn || opt.name || opt.value || (typeof opt === 'string' ? opt : 'Unknown'));
-          return (
-            <option key={i} value={val}>{display}</option>
-          );
-        })}
-      </select>
-      {errors[name] && <div style={{color: '#ef4444', fontSize: '0.8rem', marginTop: '0.4rem'}}>{errors[name]}</div>}
-    </div>
-  );
+  const renderDropdown = (name, label, optionsSource = null, required = false) => {
+    const sourceKey = optionsSource || name;
+    return (
+      <div className="form-group">
+        <label className={required ? 'required' : ''}>{label}</label>
+        <select name={name} value={formData[name]} onChange={handleChange} style={errors[name] ? {borderColor: '#ef4444'} : {}}>
+          <option value="">Select...</option>
+          {options[sourceKey]?.map((opt, i) => {
+            const val = opt.code || opt.id || opt.value || (typeof opt === 'string' ? opt : i);
+            const display = opt.nameTh ? `${opt.nameTh} (${opt.nameEn || opt.name || val})` : (opt.nameEn || opt.name || opt.value || (typeof opt === 'string' ? opt : 'Unknown'));
+            return (
+              <option key={i} value={val}>{display}</option>
+            );
+          })}
+        </select>
+        {errors[name] && <div style={{color: '#ef4444', fontSize: '0.8rem', marginTop: '0.4rem'}}>{errors[name]}</div>}
+      </div>
+    );
+  };
 
   const renderInput = (name, label, type="text", required=false, tooltipText="") => (
     <div className="form-group">
@@ -286,7 +289,7 @@ const NewLoanForm = () => {
           <div className="form-grid" style={{ backgroundColor: '#f8fafc', padding: '1.5rem', borderRadius: '8px', border: '1px solid #f1f5f9' }}>
             {renderInput('employmentPeriod', 'Employment Period (ระยะเวลาการทำงาน - ปี)', 'number', false, 'e.g. 2')}
             {renderDropdown('homeOwnership', 'Home Ownership (สถานะครอบครองที่อยู่อาศัย)')}
-            {renderDropdown('incomeCate', 'Income Category (ระดับรายได้)')}
+             {renderDropdown('incomeCategory', 'Income Category (ระดับรายได้)', 'incomeCate')}
             <div className="form-group">
               <label>Annual Income (รายได้ต่อปี)</label>
               <div style={{ position: 'relative' }}>
