@@ -313,7 +313,7 @@ const NewLoanForm = () => {
     );
   };
 
-  const renderInput = (name, label, type="text", required=false, tooltipText="", maxLength=null) => (
+  const renderInput = (name, label, type="text", required=false, tooltipText="", maxLength=null, step=null) => (
     <div className="form-group">
       <label className={required ? 'required' : ''}>{label}</label>
       <input 
@@ -324,6 +324,7 @@ const NewLoanForm = () => {
         style={errors[name] ? {borderColor: '#ef4444'} : {}}
         placeholder={tooltipText}
         maxLength={maxLength}
+        step={step}
       />
       {errors[name] && <div style={{color: '#ef4444', fontSize: '0.8rem', marginTop: '0.4rem'}}>{errors[name]}</div>}
     </div>
@@ -416,7 +417,7 @@ const NewLoanForm = () => {
             <span style={{ fontSize: '1.25rem' }}>💼</span> Applicant Financial & Employment (การเงินและการทำงาน)
           </h3>
           <div className="form-grid" style={{ backgroundColor: '#f8fafc', padding: '1.5rem', borderRadius: '8px', border: '1px solid #f1f5f9' }}>
-            {renderInput('employmentPeriod', 'Employment Period (ระยะเวลาการทำงาน - ปี)', 'number', false, 'e.g. 2')}
+            {renderInput('employmentPeriod', 'Employment Period (ระยะเวลาการทำงาน - ปี)', 'number', false, 'e.g. 2', null, 'any')}
             {renderDropdown('homeOwnership', 'Home Ownership (สถานะครอบครองที่อยู่อาศัย)', null, true)}
              {renderDropdown('incomeCategory', 'Income Category (ระดับรายได้)', 'incomeCate')}
             <div className="form-group">
@@ -426,7 +427,7 @@ const NewLoanForm = () => {
                 <input type="number" name="annualIncome" value={formData.annualIncome} onChange={handleChange} step="0.01" style={{ paddingLeft: '2rem', width: '100%' }} placeholder="0.00" />
               </div>
             </div>
-            {renderInput('debtToIncomeRatio', 'Debt-to-Income Ratio (อัตราส่วนหนี้สินต่อรายได้)', 'number')}
+            {renderInput('debtToIncomeRatio', 'Debt-to-Income Ratio (อัตราส่วนหนี้สินต่อรายได้)', 'number', false, 'e.g. 0.4', null, 'any')}
           </div>
         </section>
 
@@ -436,7 +437,7 @@ const NewLoanForm = () => {
             <span style={{ fontSize: '1.25rem' }}>📋</span> Loan Terms & Finalization (เงื่อนไขและการสรุป)
           </h3>
           <div className="form-grid" style={{ backgroundColor: '#f8fafc', padding: '1.5rem', borderRadius: '8px', border: '1px solid #f1f5f9' }}>
-            {renderInput('interestRate', 'Interest Rate (อัตราดอกเบี้ย %)', 'number')}
+            {renderInput('interestRate', 'Interest Rate (อัตราดอกเบี้ย %)', 'number', false, 'e.g. 7.5', null, 'any')}
             {renderDropdown('grade', 'Grade (ระดับความน่าเชื่อถือ)')}
             {renderDropdown('loanCondition', 'Loan Condition (สถานะของสัญญา)')}
             <div className="form-group">
