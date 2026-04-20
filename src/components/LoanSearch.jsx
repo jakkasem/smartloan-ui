@@ -80,8 +80,8 @@ const LoanSearch = () => {
           borderRadius: '6px', 
           marginBottom: '1rem' 
         }}>
-          <h3 style={{ margin: 0, color: '#334155', fontSize: '1.125rem', fontWeight: '700' }}>
-            Criteria <span style={{ fontWeight: '600' }}>(เงื่อนไขการค้นหา)</span>
+          <h3 style={{ margin: 0, color: '#334155', fontSize: '1.125rem', fontWeight: '600' }}>
+            Criteria <span style={{ fontWeight: '500' }}>(เงื่อนไขการค้นหา)</span>
           </h3>
         </div>
         
@@ -198,8 +198,8 @@ const LoanSearch = () => {
           borderBottom: '2px solid #e2e8f0', 
           marginBottom: '1.5rem' 
         }}>
-          <h3 style={{ margin: 0, color: '#1e293b', fontSize: '1.25rem', fontWeight: '700' }}>
-            Search Result <span style={{ color: '#64748b', fontWeight: '400', fontSize: '1rem' }}>(ผลการค้นหา)</span>
+          <h3 style={{ margin: 0, color: '#1e293b', fontSize: '1.125rem', fontWeight: '600' }}>
+            Search Result <span style={{ color: '#64748b', fontWeight: '400', fontSize: '0.875rem' }}>(ผลการค้นหา)</span>
           </h3>
           {searchResults !== null && (
             <span style={{ 
@@ -359,9 +359,9 @@ const LoanSearch = () => {
 
         .modern-table th {
           padding: 1.25rem 1rem;
-          font-weight: 700;
+          font-weight: 600;
           color: #475569;
-          font-size: 0.875rem;
+          font-size: 1.125rem;
           text-transform: uppercase;
           letter-spacing: 0.5px;
           background-color: #f8fafc;
