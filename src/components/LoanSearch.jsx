@@ -239,15 +239,15 @@ const LoanSearch = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {searchResults.map((loan, index) => (
+                  {searchResults && searchResults.map((loan, index) => (
                     <tr key={loan.id || index} style={{ animationDelay: `${index * 0.05}s` }}>
-                      <td style={{ color: '#0f172a', fontWeight: '600', textAlign: 'center' }}>#{loan.id}</td>
-                      <td style={{ color: '#334155', fontWeight: '500' }}>{loan.customerName || '-'}</td>
+                      <td style={{ color: '#0f172a', fontWeight: '600', textAlign: 'center', fontSize: '0.85rem' }}>#{loan.id}</td>
+                      <td style={{ color: '#334155', fontWeight: '500', fontSize: '0.85rem' }}>{loan.customerName || '-'}</td>
                       <td style={{ color: '#64748b', fontFamily: 'monospace', fontSize: '0.85rem', textAlign: 'center', whiteSpace: 'nowrap' }}>
                         {formatNationalId(loan.nationalId)}
                       </td>
-                      <td style={{ color: '#64748b', textAlign: 'center', whiteSpace: 'nowrap' }}>{loan.phoneNumber || '-'}</td>
-                      <td style={{ color: '#2563eb', fontWeight: '700', textAlign: 'right' }}>
+                      <td style={{ color: '#64748b', textAlign: 'center', whiteSpace: 'nowrap', fontSize: '0.85rem' }}>{loan.phoneNumber || '-'}</td>
+                      <td style={{ color: '#2563eb', fontWeight: '700', textAlign: 'right', fontSize: '0.85rem' }}>
                         {loan.loanAmount 
                           ? loan.loanAmount.toLocaleString('th-TH', { style: 'currency', currency: 'THB' }) 
                           : '-'}
