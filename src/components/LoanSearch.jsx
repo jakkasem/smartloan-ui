@@ -230,27 +230,29 @@ const LoanSearch = () => {
               <table className="modern-table">
                 <thead>
                   <tr>
-                    <th>ID</th>
+                    <th style={{ textAlign: 'center' }}>ID</th>
                     <th>Customer Name</th>
-                    <th>National ID</th>
-                    <th>Phone Number</th>
-                    <th>Loan Amount</th>
-                    <th>Status</th>
+                    <th style={{ textAlign: 'center' }}>National ID</th>
+                    <th style={{ textAlign: 'center' }}>Phone Number</th>
+                    <th style={{ textAlign: 'right' }}>Loan Amount</th>
+                    <th style={{ textAlign: 'center' }}>Status</th>
                   </tr>
                 </thead>
                 <tbody>
                   {searchResults.map((loan, index) => (
                     <tr key={loan.id || index} style={{ animationDelay: `${index * 0.05}s` }}>
-                      <td style={{ color: '#0f172a', fontWeight: '600' }}>#{loan.id}</td>
+                      <td style={{ color: '#0f172a', fontWeight: '600', textAlign: 'center' }}>#{loan.id}</td>
                       <td style={{ color: '#334155', fontWeight: '500' }}>{loan.customerName || '-'}</td>
-                      <td style={{ color: '#64748b', fontFamily: 'monospace', fontSize: '0.9rem' }}>{formatNationalId(loan.nationalId)}</td>
-                      <td style={{ color: '#64748b' }}>{loan.phoneNumber || '-'}</td>
-                      <td style={{ color: '#0f172a', fontWeight: '700' }}>
+                      <td style={{ color: '#64748b', fontFamily: 'monospace', fontSize: '0.85rem', textAlign: 'center', whiteSpace: 'nowrap' }}>
+                        {formatNationalId(loan.nationalId)}
+                      </td>
+                      <td style={{ color: '#64748b', textAlign: 'center', whiteSpace: 'nowrap' }}>{loan.phoneNumber || '-'}</td>
+                      <td style={{ color: '#2563eb', fontWeight: '700', textAlign: 'right' }}>
                         {loan.loanAmount 
                           ? loan.loanAmount.toLocaleString('th-TH', { style: 'currency', currency: 'THB' }) 
                           : '-'}
                       </td>
-                      <td>
+                      <td style={{ textAlign: 'center' }}>
                         <span className={`status-badge ${loan.status ? loan.status.toLowerCase() : 'unknown'}`}>
                           {(loan.status === 'Pending' || loan.status === 'PENDING') && '⏳ '}
                           {loan.status === 'Approved' && '✓ '}
@@ -367,9 +369,10 @@ const LoanSearch = () => {
         }
 
         .modern-table td {
-          padding: 1.25rem 1rem;
+          padding: 1rem;
           border-bottom: 1px solid #f1f5f9;
           transition: background-color 0.2s;
+          vertical-align: middle;
         }
 
         .modern-table tbody tr {
@@ -381,15 +384,16 @@ const LoanSearch = () => {
         }
 
         .status-badge {
-          padding: 0.4rem 1rem;
+          padding: 0.35rem 0.85rem;
           border-radius: 9999px;
-          font-size: 0.85rem;
+          font-size: 0.75rem;
           font-weight: 700;
           display: inline-flex;
           align-items: center;
           gap: 0.4rem;
-          box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-          letter-spacing: 0.3px;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+          letter-spacing: 0.5px;
+          text-transform: uppercase;
         }
 
         .status-badge.approved {
