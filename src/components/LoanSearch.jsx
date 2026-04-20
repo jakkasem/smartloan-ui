@@ -80,7 +80,7 @@ const LoanSearch = () => {
           borderRadius: '6px', 
           marginBottom: '1rem' 
         }}>
-          <h3 style={{ margin: 0, color: '#334155', fontSize: '1.2rem', fontWeight: '700' }}>
+          <h3 style={{ margin: 0, color: '#334155', fontSize: '1.125rem', fontWeight: '700' }}>
             Criteria <span style={{ fontWeight: '600' }}>(เงื่อนไขการค้นหา)</span>
           </h3>
         </div>
@@ -97,7 +97,7 @@ const LoanSearch = () => {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
             {/* ID Field */}
             <div>
-              <label style={{ display: 'block', fontSize: '0.9rem', fontWeight: '600', color: '#64748b', marginBottom: '0.5rem' }}>
+              <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#64748b', marginBottom: '0.5rem' }}>
                 ID
               </label>
               <input 
@@ -112,7 +112,7 @@ const LoanSearch = () => {
             
             {/* Customer Name Field */}
             <div>
-              <label style={{ display: 'block', fontSize: '0.9rem', fontWeight: '600', color: '#64748b', marginBottom: '0.5rem' }}>
+              <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#64748b', marginBottom: '0.5rem' }}>
                 Customer Name (ชื่อลูกค้า)
               </label>
               <input 
@@ -127,7 +127,7 @@ const LoanSearch = () => {
 
             {/* Status Field */}
             <div>
-              <label style={{ display: 'block', fontSize: '0.9rem', fontWeight: '600', color: '#64748b', marginBottom: '0.5rem' }}>
+              <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#64748b', marginBottom: '0.5rem' }}>
                 Status (สถานะ)
               </label>
               <select 
@@ -291,7 +291,7 @@ const LoanSearch = () => {
           padding: 0.75rem 1rem;
           border: 1px solid #cbd5e1;
           border-radius: 6px;
-          fontSize: 0.95rem;
+          fontSize: 0.875rem;
           background-color: white;
           outline: none;
           box-shadow: 0 1px 2px rgba(0,0,0,0.02);
@@ -359,7 +359,7 @@ const LoanSearch = () => {
           padding: 1.25rem 1rem;
           font-weight: 700;
           color: #475569;
-          font-size: 0.85rem;
+          font-size: 0.875rem;
           text-transform: uppercase;
           letter-spacing: 0.5px;
           background-color: #f8fafc;
