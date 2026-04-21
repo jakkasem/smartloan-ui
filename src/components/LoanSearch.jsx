@@ -57,7 +57,8 @@ const LoanSearch = () => {
     if (!id) return '-';
     const cleanId = id.toString().replace(/\D/g, '');
     if (cleanId.length === 13) {
-      return `${cleanId.slice(0, 1)}-${cleanId.slice(1, 5)}-${cleanId.slice(5, 10)}-${cleanId.slice(10, 12)}-${cleanId.slice(12, 13)}`;
+      // Data Masking for PDPA: Show first and last digits, mask others
+      return `${cleanId.slice(0, 1)}-XXXX-XXXXX-XX-${cleanId.slice(12, 13)}`;
     }
     return id;
   };
