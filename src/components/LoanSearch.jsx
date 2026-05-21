@@ -99,7 +99,7 @@ const LoanSearch = () => {
             {/* ID Field */}
             <div>
               <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '600', color: '#64748b', marginBottom: '0.5rem' }}>
-                ID
+                ID (รหัส)
               </label>
               <input 
                 type="text" 
