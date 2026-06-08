@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
+const API_BASE_URL = window._env_?.API_BASE_URL ?? import.meta.env.VITE_API_BASE_URL;
+const API_HEADERS = {
+  'x-api-key': window._env_?.API_KEY ?? import.meta.env.VITE_API_KEY,
+  'ngrok-skip-browser-warning': import.meta.env.VITE_NGROK_SKIP_WARNING
+};
+
 const LoanForm = () => {
   const initialState = {
     customerName: '',
@@ -36,11 +42,8 @@ const LoanForm = () => {
 
   useEffect(() => {
     // 1. Fetch Marital Status directly from External API
-    fetch('https://smartloan-api-ipn1.onrender.com/api/reflist?type=maritalStatus', {
-      headers: {
-        'x-api-key': 'smartloan-secret-key-2026',
-        'ngrok-skip-browser-warning': '69420'
-      }
+    fetch(`${API_BASE_URL}/api/reflist?type=maritalStatus`, {
+      headers: API_HEADERS
     })
       .then(res => res.json())
       .then(result => {
@@ -51,40 +54,40 @@ const LoanForm = () => {
       .catch(err => console.error('Error fetching Marital Status directly:', err));
 
     // 2. Fetch Position directly
-    fetch('https://smartloan-api-ipn1.onrender.com/api/reflist?type=position', {
-      headers: { 'x-api-key': 'smartloan-secret-key-2026', 'ngrok-skip-browser-warning': '69420' }
+    fetch(`${API_BASE_URL}/api/reflist?type=position`, {
+      headers: API_HEADERS
     })
       .then(res => res.json())
       .then(result => { if (result.success && result.data) setRefData(prev => ({ ...prev, positions: result.data })); })
       .catch(err => console.error('Error fetching Position directly:', err));
 
     // 3. Fetch Debt Type directly
-    fetch('https://smartloan-api-ipn1.onrender.com/api/reflist?type=debtType', {
-      headers: { 'x-api-key': 'smartloan-secret-key-2026', 'ngrok-skip-browser-warning': '69420' }
+    fetch(`${API_BASE_URL}/api/reflist?type=debtType`, {
+      headers: API_HEADERS
     })
       .then(res => res.json())
       .then(result => { if (result.success && result.data) setRefData(prev => ({ ...prev, debtTypes: result.data })); })
       .catch(err => console.error('Error fetching Debt Type directly:', err));
 
     // 4. Fetch Purpose directly
-    fetch('https://smartloan-api-ipn1.onrender.com/api/reflist?type=purpose', {
-      headers: { 'x-api-key': 'smartloan-secret-key-2026', 'ngrok-skip-browser-warning': '69420' }
+    fetch(`${API_BASE_URL}/api/reflist?type=purpose`, {
+      headers: API_HEADERS
     })
       .then(res => res.json())
       .then(result => { if (result.success && result.data) setRefData(prev => ({ ...prev, purposes: result.data })); })
       .catch(err => console.error('Error fetching Purpose directly:', err));
 
     // 5. Fetch Term directly
-    fetch('https://smartloan-api-ipn1.onrender.com/api/reflist?type=term', {
-      headers: { 'x-api-key': 'smartloan-secret-key-2026', 'ngrok-skip-browser-warning': '69420' }
+    fetch(`${API_BASE_URL}/api/reflist?type=term`, {
+      headers: API_HEADERS
     })
       .then(res => res.json())
       .then(result => { if (result.success && result.data) setRefData(prev => ({ ...prev, terms: result.data })); })
       .catch(err => console.error('Error fetching Term directly:', err));
 
     // 6. Fetch Home Ownership directly
-    fetch('https://smartloan-api-ipn1.onrender.com/api/reflist?type=homeOwnership', {
-      headers: { 'x-api-key': 'smartloan-secret-key-2026', 'ngrok-skip-browser-warning': '69420' }
+    fetch(`${API_BASE_URL}/api/reflist?type=homeOwnership`, {
+      headers: API_HEADERS
     })
       .then(res => res.json())
       .then(result => { 
@@ -154,12 +157,11 @@ const LoanForm = () => {
       };
 
       try {
-        const response = await fetch('https://smartloan-api-ipn1.onrender.com/api/loan/apply', {
+        const response = await fetch(`${API_BASE_URL}/api/loan/apply`, {
           method: 'POST',
-          headers: { 
+          headers: {
             'Content-Type': 'application/json',
-            'x-api-key': 'smartloan-secret-key-2026',
-            'ngrok-skip-browser-warning': '69420'
+            ...API_HEADERS
           },
           body: JSON.stringify(cleanedData)
         });

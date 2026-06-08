@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
+const API_BASE_URL = window._env_?.API_BASE_URL ?? import.meta.env.VITE_API_BASE_URL;
+const API_HEADERS = {
+  'x-api-key': window._env_?.API_KEY ?? import.meta.env.VITE_API_KEY,
+  'ngrok-skip-browser-warning': import.meta.env.VITE_NGROK_SKIP_WARNING
+};
+
 const LoanSearch = () => {
   const [criteriaId, setCriteriaId] = useState('');
   const [criteriaName, setCriteriaName] = useState('');
@@ -28,11 +34,8 @@ const LoanSearch = () => {
     if (criteriaStatus) params.append('status', criteriaStatus);
 
     try {
-      const response = await fetch(`https://smartloan-api-ipn1.onrender.com/api/loans/search?${params.toString()}`, {
-        headers: {
-          'x-api-key': 'smartloan-secret-key-2026',
-          'ngrok-skip-browser-warning': '69420'
-        }
+      const response = await fetch(`${API_BASE_URL}/api/loans/search?${params.toString()}`, {
+        headers: API_HEADERS
       });
       
       const data = await response.json();
