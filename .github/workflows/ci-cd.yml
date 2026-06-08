@@ -75,11 +75,6 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-            docker pull ghcr.io/${{ github.repository }}:latest
-            docker stop smartloan-ui || true
-            docker rm smartloan-ui || true
-            docker run -d \
-              --name smartloan-ui \
-              --restart unless-stopped \
-              -p 80:80 \
-              ghcr.io/${{ github.repository }}:latest
+            cd ~/apps
+            docker compose pull smartloan-ui
+            docker compose up -d smartloan-ui
