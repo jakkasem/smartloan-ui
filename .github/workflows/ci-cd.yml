@@ -77,4 +77,5 @@ jobs:
             echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
             cd ~/apps
             docker compose pull smartloan-ui
+            docker rm -f smartloan-ui || true
             docker compose up -d smartloan-ui
