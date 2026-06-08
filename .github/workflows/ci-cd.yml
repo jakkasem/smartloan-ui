@@ -81,5 +81,5 @@ jobs:
             docker run -d \
               --name smartloan-ui \
               --restart unless-stopped \
-              -p 8080:8080 \
+              -p 80:80 \
               ghcr.io/${{ github.repository }}:latest
