@@ -24,7 +24,7 @@ function App() {
               color: '#0f172a', letterSpacing: '0.5px',
               fontFamily: 'Inter, sans-serif'
             }}>LOAN APP</span>
-            <span style={{ fontSize: '0.7rem', color: '#64748b', fontWeight: '600', letterSpacing: '1.2px', textTransform: 'uppercase' }}>Approval System 1.0.0</span>
+            <span style={{ fontSize: '0.7rem', color: '#64748b', fontWeight: '600', letterSpacing: '1.2px', textTransform: 'uppercase' }}>Approval System 1.0.1</span>
           </div>
         </div>
 

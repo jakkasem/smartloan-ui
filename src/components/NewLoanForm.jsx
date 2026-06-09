@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
-const API_BASE_URL = window._env_?.API_BASE_URL ?? import.meta.env.VITE_API_BASE_URL;
+const _url = window._env_?.API_BASE_URL;
+const API_BASE_URL = (_url && !_url.startsWith('__')) ? _url : import.meta.env.VITE_API_BASE_URL;
+const _key = window._env_?.API_KEY;
 const API_HEADERS = {
-  'x-api-key': window._env_?.API_KEY ?? import.meta.env.VITE_API_KEY,
+  'x-api-key': (_key && !_key.startsWith('__')) ? _key : import.meta.env.VITE_API_KEY,
   'ngrok-skip-browser-warning': import.meta.env.VITE_NGROK_SKIP_WARNING
 };
 
