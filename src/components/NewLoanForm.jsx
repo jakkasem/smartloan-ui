@@ -383,11 +383,11 @@ const NewLoanForm = () => {
             </div>
 
             {renderInput('phoneNumber', 'Phone Number (เบอร์โทรศัพท์)', 'tel', false, '08xxxxxxxx', 10)}
-            {renderInput('email', 'Email (อีเมล)', 'email', false, 'username@domain.com')}
+            {renderInput('email', 'Email (อีเมล)', 'email', true, 'username@domain.com')}
             {renderDropdown('maritalStatus', 'Marital Status (สถานภาพการสมรส)', null, true)}
             {renderInput('companyName', 'Company Name (ชื่อบริษัท)', 'text', false, 'Company Name Co., Ltd.')}
             {renderDropdown('position', 'Position (ตำแหน่งงาน)', null, true)}
-            {renderInput('officeNumber', 'Office Number (เบอร์โทรศัพท์ที่ทำงาน)', 'tel', false, 'e.g. 021234567 ext 123')}
+            {renderInput('officeNumber', 'Office Number (เบอร์โทรศัพท์ที่ทำงาน)', 'tel', true, 'e.g. 021234567 ext 123')}
             
             <div className="form-group" style={{ gridColumn: '1 / -1' }}>
               <label>Address (ที่อยู่)</label>
@@ -443,7 +443,6 @@ const NewLoanForm = () => {
           <div className="form-grid" style={{ backgroundColor: '#f8fafc', padding: '1.5rem', borderRadius: '8px', border: '1px solid #f1f5f9' }}>
             {renderInput('interestRate', 'Interest Rate (อัตราดอกเบี้ย %)', 'number', false, 'e.g. 7.5', null, 'any')}
             {renderDropdown('grade', 'Grade (ระดับความน่าเชื่อถือ)')}
-            {renderDropdown('loanCondition', 'Loan Condition (สถานะของสัญญา)')}
             <div className="form-group">
               <label>Installment (ยอดชำระรายเดือน)</label>
               <div style={{ position: 'relative' }}>
