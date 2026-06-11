@@ -18,6 +18,8 @@ const LoanSearch = () => {
   const [loading, setLoading] = useState(false);
   const [searching, setSearching] = useState(false);
   const [error, setError] = useState(null);
+  const [sortKey, setSortKey] = useState(null);
+  const [sortDir, setSortDir] = useState('asc');
 
   const handleClear = () => {
     setCriteriaId('');
@@ -25,6 +27,38 @@ const LoanSearch = () => {
     setCriteriaStatus('');
     setSearchResults(null);
     setError(null);
+    setSortKey(null);
+    setSortDir('asc');
+  };
+
+  const handleSort = (key) => {
+    if (sortKey === key) {
+      setSortDir(prev => prev === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortKey(key);
+      setSortDir('asc');
+    }
+  };
+
+  const getSortedResults = () => {
+    if (!searchResults || !sortKey) return searchResults;
+    return [...searchResults].sort((a, b) => {
+      let aVal = a[sortKey];
+      let bVal = b[sortKey];
+      if (aVal == null) aVal = '';
+      if (bVal == null) bVal = '';
+      if (typeof aVal === 'number' && typeof bVal === 'number') {
+        return sortDir === 'asc' ? aVal - bVal : bVal - aVal;
+      }
+      return sortDir === 'asc'
+        ? String(aVal).localeCompare(String(bVal), 'th')
+        : String(bVal).localeCompare(String(aVal), 'th');
+    });
+  };
+
+  const SortIcon = ({ colKey }) => {
+    if (sortKey !== colKey) return <span className="sort-icon">⇅</span>;
+    return <span className="sort-icon active">{sortDir === 'asc' ? '↑' : '↓'}</span>;
   };
 
   const handleSearch = async () => {
@@ -238,16 +272,28 @@ const LoanSearch = () => {
               <table className="modern-table">
                 <thead>
                   <tr>
-                    <th style={{ textAlign: 'center' }}>ID</th>
-                    <th>Customer Name</th>
-                    <th style={{ textAlign: 'center' }}>National ID</th>
-                    <th style={{ textAlign: 'center' }}>Phone Number</th>
-                    <th style={{ textAlign: 'right' }}>Loan Amount</th>
-                    <th style={{ textAlign: 'center' }}>Status</th>
+                    <th style={{ textAlign: 'center' }} className="sortable-th" onClick={() => handleSort('id')}>
+                      ID <SortIcon colKey="id" />
+                    </th>
+                    <th className="sortable-th" onClick={() => handleSort('customerName')}>
+                      Customer Name <SortIcon colKey="customerName" />
+                    </th>
+                    <th style={{ textAlign: 'center' }} className="sortable-th" onClick={() => handleSort('nationalId')}>
+                      National ID <SortIcon colKey="nationalId" />
+                    </th>
+                    <th style={{ textAlign: 'center' }} className="sortable-th" onClick={() => handleSort('phoneNumber')}>
+                      Phone Number <SortIcon colKey="phoneNumber" />
+                    </th>
+                    <th style={{ textAlign: 'right' }} className="sortable-th" onClick={() => handleSort('loanAmount')}>
+                      Loan Amount <SortIcon colKey="loanAmount" />
+                    </th>
+                    <th style={{ textAlign: 'center' }} className="sortable-th" onClick={() => handleSort('status')}>
+                      Status <SortIcon colKey="status" />
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
-                  {searchResults && searchResults.map((loan, index) => (
+                  {getSortedResults().map((loan, index) => (
                     <tr key={loan.id || index} style={{ animationDelay: `${index * 0.05}s` }}>
                       <td style={{ color: '#0f172a', fontWeight: '600', textAlign: 'center', fontSize: '0.85rem' }}>#{loan.id}</td>
                       <td style={{ color: '#334155', fontWeight: '500', fontSize: '0.85rem' }}>{loan.customerName || '-'}</td>
@@ -374,6 +420,31 @@ const LoanSearch = () => {
           letter-spacing: 0.5px;
           background-color: #f8fafc;
           border-bottom: 2px solid #e2e8f0;
+        }
+
+        .sortable-th {
+          cursor: pointer;
+          user-select: none;
+          white-space: nowrap;
+          transition: background-color 0.15s, color 0.15s;
+        }
+
+        .sortable-th:hover {
+          background-color: #eff6ff;
+          color: #2563eb;
+        }
+
+        .sort-icon {
+          display: inline-block;
+          margin-left: 0.35rem;
+          font-size: 0.75rem;
+          opacity: 0.35;
+          transition: opacity 0.15s;
+        }
+
+        .sort-icon.active {
+          opacity: 1;
+          color: #2563eb;
         }
 
         .modern-table td {
