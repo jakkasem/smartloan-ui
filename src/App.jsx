@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import LoanForm from './components/LoanForm';
 import LoanSearch from './components/LoanSearch';
 import NewLoanForm from './components/NewLoanForm';
+import AiChat from './components/AiChat';
 
 function App() {
   const [activeView, setActiveView] = useState('newApplication');
@@ -29,7 +30,7 @@ function App() {
         </div>
 
         <nav style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-          <span style={{ fontSize: '0.75rem', fontWeight: '700', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '0.5rem', paddingLeft: '0.5rem' }}>Menu</span>
+          <span style={{ fontSize: '0.75rem', fontWeight: '700', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '0.5rem', paddingLeft: '0.5rem' }}>เมนู</span>
 
           <button 
             className={`sidebar-item ${activeView === 'newApplication' ? 'active' : ''}`}
@@ -47,21 +48,37 @@ function App() {
             New Loan Form
             {activeView === 'newApplication' && <span style={{ marginLeft: 'auto', width: '6px', height: '6px', background: '#2563eb', borderRadius: '50%' }}></span>}
           </button>
-          <button 
+          <button
             className={`sidebar-item ${activeView === 'search' ? 'active' : ''}`}
             onClick={() => setActiveView('search')}
-            style={{ 
+            style={{
               display: 'flex', alignItems: 'center', gap: '0.75rem',
-              textAlign: 'left', border: 'none', background: activeView === 'search' ? '#eff6ff' : 'transparent', 
+              textAlign: 'left', border: 'none', background: activeView === 'search' ? '#eff6ff' : 'transparent',
               width: '100%', cursor: 'pointer', borderRadius: '8px', padding: '0.85rem 1rem',
               fontWeight: activeView === 'search' ? '600' : '500',
               color: activeView === 'search' ? '#2563eb' : '#475569',
               transition: 'all 0.2s ease'
             }}
           >
-            <span style={{ fontSize: '1.1rem', opacity: activeView === 'search' ? 1 : 0.6 }}>🔍</span> 
+            <span style={{ fontSize: '1.1rem', opacity: activeView === 'search' ? 1 : 0.6 }}>🔍</span>
             Loan Search
             {activeView === 'search' && <span style={{ marginLeft: 'auto', width: '6px', height: '6px', background: '#2563eb', borderRadius: '50%' }}></span>}
+          </button>
+          <button
+            className={`sidebar-item ${activeView === 'aiChat' ? 'active' : ''}`}
+            onClick={() => setActiveView('aiChat')}
+            style={{
+              display: 'flex', alignItems: 'center', gap: '0.75rem',
+              textAlign: 'left', border: 'none', background: activeView === 'aiChat' ? '#eff6ff' : 'transparent',
+              width: '100%', cursor: 'pointer', borderRadius: '8px', padding: '0.85rem 1rem',
+              fontWeight: activeView === 'aiChat' ? '600' : '500',
+              color: activeView === 'aiChat' ? '#2563eb' : '#475569',
+              transition: 'all 0.2s ease'
+            }}
+          >
+            <span style={{ fontSize: '1.1rem', opacity: activeView === 'aiChat' ? 1 : 0.6 }}>🤖</span>
+            AI Assistant
+            {activeView === 'aiChat' && <span style={{ marginLeft: 'auto', width: '6px', height: '6px', background: '#2563eb', borderRadius: '50%' }}></span>}
           </button>
         </nav>
       </aside>
@@ -69,7 +86,7 @@ function App() {
       <main className="main-content">
         <header>
           <div style={{ fontSize: '0.875rem', fontWeight: '500', color: 'var(--text-muted)' }}>
-            Home / {activeView === 'newApplication' ? 'New Loan Application' : 'Loan Search'}
+            Home / {activeView === 'newApplication' ? 'New Loan Application' : activeView === 'search' ? 'Loan Search' : 'AI Assistant'}
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
             <span style={{ fontSize: '0.875rem' }}>ยินดีต้อนรับ, Admin</span>
@@ -83,6 +100,7 @@ function App() {
 
           {activeView === 'newApplication' && <NewLoanForm />}
           {activeView === 'search' && <LoanSearch />}
+          {activeView === 'aiChat' && <AiChat />}
         </div>
       </main>
     </div>
