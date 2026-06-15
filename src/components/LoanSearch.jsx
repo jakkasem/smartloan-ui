@@ -287,7 +287,7 @@ const LoanSearch = () => {
                     <th style={{ textAlign: 'right' }} className="sortable-th" onClick={() => handleSort('loanAmount')}>
                       Loan Amount <SortIcon colKey="loanAmount" />
                     </th>
-                    <th style={{ textAlign: 'center' }} className="sortable-th" onClick={() => handleSort('status')}>
+                    <th style={{ textAlign: 'center', width: '120px' }} className="sortable-th" onClick={() => handleSort('status')}>
                       Status <SortIcon colKey="status" />
                     </th>
                   </tr>
@@ -469,6 +469,8 @@ const LoanSearch = () => {
           font-weight: 700;
           display: inline-flex;
           align-items: center;
+          justify-content: center;
+          white-space: nowrap;
           gap: 0.4rem;
           box-shadow: 0 2px 4px rgba(0,0,0,0.04);
           letter-spacing: 0.5px;
