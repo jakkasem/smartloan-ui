@@ -34,11 +34,16 @@ function AiChat() {
     if (textareaRef.current) textareaRef.current.style.height = 'auto';
 
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10 * 60 * 1000);
+
       const res = await fetch(WEBHOOK_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: text, user_id: SESSION_ID }),
+        signal: controller.signal,
       });
+      clearTimeout(timeoutId);
 
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
